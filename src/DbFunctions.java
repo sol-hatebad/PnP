@@ -122,14 +122,15 @@ public class DbFunctions {
             statement = conn.createStatement();
             rs = statement.executeQuery(query);
             while (rs.next()){
-                System.out.println("charid        : " + rs.getString("charid")+" ");
-                System.out.println("name          : " + rs.getString("name")+" ");
-                System.out.println("gender        : " + rs.getString("gender")+" ");
-                System.out.println("age           : " + rs.getInt("age")+" ");
-                System.out.println("stature       : " + rs.getString("stature")+" ");
-                System.out.println("religion      : " + rs.getString("religion")+" ");
-                System.out.println("job           : " + rs.getString("job")+" ");
-                System.out.println("maritalStatus : " + rs.getString("maritalStatus")+" \n");
+                System.out.println("|charid        : " + rs.getString("charid")+" ");
+                System.out.println("|name          : " + rs.getString("name")+" ");
+                System.out.println("|gender        : " + rs.getString("gender")+" ");
+                System.out.println("|age           : " + rs.getInt("age")+" ");
+                System.out.println("|stature       : " + rs.getString("stature")+" ");
+                System.out.println("|religion      : " + rs.getString("religion")+" ");
+                System.out.println("|job           : " + rs.getString("job")+" ");
+                System.out.println("|maritalStatus : " + rs.getString("maritalStatus")+" ");
+                System.out.println("--------------------------------------------");
             }
         } catch (Exception e){
         System.out.println(e);
