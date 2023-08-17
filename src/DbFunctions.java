@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class DbFunctions {
+
+    //Connect to DB
     public Connection connect_to_db(String dbname, String user, String pass) {
         Connection conn = null;
         try {
@@ -22,6 +24,7 @@ public class DbFunctions {
         return conn;
     }
 
+    // Create Table with name entered in Main
     public void createTable (Connection conn, String tbl_name){
         Statement statement;
         try{
@@ -34,6 +37,7 @@ public class DbFunctions {
         }
     }
 
+    // Fill table (name entered in Main) with data
     public void insert_row(Connection conn, String tbl_name, String name, String gender){
         Statement statement;
         try{
@@ -44,7 +48,24 @@ public class DbFunctions {
         }catch (Exception e){
             System.out.println(e);
         }
+    }
 
-
+    // Read the table (name entered in Main)
+    public void read_data(Connection conn, String tbl_name){
+        Statement statement;
+        ResultSet rs = null;
+        try {
+            String query = String.format("select * from %s", tbl_name);
+            statement = conn.createStatement();
+            rs = statement.executeQuery(query);
+            while (rs.next()){
+                System.out.print(rs.getString("charid")+" ");
+                System.out.print(rs.getString("name")+" ");
+                System.out.println(rs.getString("gender")+" ");
+            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
     }
 }

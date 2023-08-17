@@ -7,6 +7,7 @@ public class Main {
         DbFunctions db = new DbFunctions();
         Connection conn = db.connect_to_db("pnphelper","postgres","Pauschri1992");
         // db.createTable(conn, "sheet");
-        db.insert_row(conn, "sheet", "Osiah", "halfdemon");
+        //db.insert_row(conn, "sheet", "Schnee", "female");
+        db.read_data(conn,"sheet");
     }
 }
