@@ -8,6 +8,11 @@ public class Main {
         Connection conn = db.connect_to_db("pnphelper","postgres","Pauschri1992");
         // db.createTable(conn, "sheet");
         //db.insert_row(conn, "sheet", "Schnee", "female");
-        db.read_data(conn,"sheet");
+        //db.read_data(conn,"sheet");
+        //db.update_name(conn, "sheet","Osiah","Oziah");
+        //db.read_data(conn,"sheet");
+        //db.createCharacter(conn, "Characters");
+        db.fill_Characters(conn, "Characters","Relaxo","Male",28,"fluffy","worships sleep","jobless","in love with food and sleep");
+        db.read_characters(conn,"Characters");
     }
 }
