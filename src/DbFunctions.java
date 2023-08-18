@@ -11,7 +11,8 @@ public class DbFunctions {
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection("jdbc:postgresql://192.168.20.125:5432/" + dbname, user, pass);
+           // conn = DriverManager.getConnection("jdbc:postgresql://192.168.20.125:5432/" + dbname, user, pass);
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost/" + dbname, user, pass);
             if (conn != null) {
                 System.out.println("Connection Established");
             } else {
