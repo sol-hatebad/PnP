@@ -11,7 +11,7 @@ public class DbFunctions {
         Connection conn = null;
         try {
             Class.forName("org.postgresql.Driver");
-           // conn = DriverManager.getConnection("jdbc:postgresql://192.168.20.125:5432/" + dbname, user, pass);
+            // conn = DriverManager.getConnection("jdbc:postgresql://192.168.20.125:5432/" + dbname, user, pass);
             conn = DriverManager.getConnection("jdbc:postgresql://localhost/" + dbname, user, pass);
             if (conn != null) {
                 System.out.println("Connection Established");
@@ -94,7 +94,10 @@ public class DbFunctions {
                     "stature varchar(200), " +
                     "religion varchar(200), " +
                     "job varchar(200), " +
-                    "maritalStatus varchar(200));";
+                    "maritalStatus varchar(200)," +
+                    "id_a_skillset INT," +
+                    "id_k_skillset INT," +
+                    "id_s_skillset INT);";
             statement=conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("table created");
@@ -103,10 +106,10 @@ public class DbFunctions {
         }
     }
 
-    public void fill_Characters (Connection conn, String tbl_name, String name, String gender, int age, String stature, String religion, String job, String maritalStatus){
+    public void fill_Characters (Connection conn, String tbl_name, String name, String gender, int age, String stature, String religion, String job, String maritalStatus, int id_a_skillset, int id_k_skillset, int id_s_skillset){
         Statement statement;
         try{
-            String query = String.format("insert into %s(name,gender,age,stature,religion,job,maritalStatus) values('%s','%s','%s','%s','%s','%s','%s');",tbl_name,name,gender,age,stature,religion,job,maritalStatus);
+            String query = String.format("insert into %s(name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",tbl_name,name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset);
             statement=conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Row inserted");
@@ -134,7 +137,7 @@ public class DbFunctions {
                 System.out.println("--------------------------------------------");
             }
         } catch (Exception e){
-        System.out.println(e);
-         }
+            System.out.println(e);
+        }
     }
 }
