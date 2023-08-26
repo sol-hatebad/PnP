@@ -25,19 +25,6 @@ public class DbFunctions {
         return conn;
     }
 
-    // Create Table with name entered in Main
-    public void createTable (Connection conn, String tbl_name){
-        Statement statement;
-        try{
-            String query = "create table "+tbl_name+"(charid SERIAL, name varchar(200),gender varchar(200),primary key (charid));";
-            statement=conn.createStatement();
-            statement.executeUpdate(query);
-            System.out.println("table created");
-        }catch (Exception e){
-            System.out.println(e);
-        }
-    }
-
     // Fill table (name entered in Main) with data
     public void insert_row(Connection conn, String tbl_name, String name, String gender){
         Statement statement;
@@ -83,10 +70,11 @@ public class DbFunctions {
         }
     }
 
-    public void createCharacter (Connection conn, String tbl_name){
+    // creating the fundamental tables with relations
+    public void createBasetables (Connection conn){
         Statement statement;
         try{
-            String query = "create table "+tbl_name+"(" +
+            String query_characterbasics = "create table characterbasics(" +
                     "charid SERIAL PRIMARY KEY, " +
                     "name varchar(200)," +
                     "gender varchar(200), " +
@@ -99,8 +87,79 @@ public class DbFunctions {
                     "id_k_skillset INT," +
                     "id_s_skillset INT);";
             statement=conn.createStatement();
-            statement.executeUpdate(query);
-            System.out.println("table created");
+            statement.executeUpdate(query_characterbasics);
+
+            System.out.println("table characterbasics created");
+            String query_action = "create table actionskills(" +
+                    "id_a_skillset SERIAL PRIMARY KEY, " +
+                    "actionskill01 varchar(200)," +
+                    "actionskill02 varchar(200), " +
+                    "actionskill03 varchar(200), " +
+                    "actionskill04 varchar(200), " +
+                    "actionskill05 varchar(200), " +
+                    "actionskill06 varchar(200), " +
+                    "actionskill07 varchar(200)," +
+                    "actionskill08 varchar(200)," +
+                    "actionskill09 varchar(200)," +
+                    "actionskill10 varchar(200));";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_action);
+            System.out.println("table actionskills created");
+
+            String query_knowledge = "create table knowledgeskills(" +
+                    "id_k_skillset SERIAL PRIMARY KEY, " +
+                    "knowledgeskill01 varchar(200)," +
+                    "knowledgeskill02 varchar(200), " +
+                    "knowledgeskill03 varchar(200), " +
+                    "knowledgeskill04 varchar(200), " +
+                    "knowledgeskill05 varchar(200), " +
+                    "knowledgeskill06 varchar(200), " +
+                    "knowledgeskill07 varchar(200)," +
+                    "knowledgeskill08 varchar(200)," +
+                    "knowledgeskill09 varchar(200)," +
+                    "knowledgeskill10 varchar(200));";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_knowledge);
+            System.out.println("table knowledgeskills created");
+
+            String query_socialskills = "create table socialskills(" +
+                    "id_s_skillset SERIAL PRIMARY KEY, " +
+                    "socialskill01 varchar(200)," +
+                    "socialskill02 varchar(200), " +
+                    "socialskill03 varchar(200), " +
+                    "socialskill04 varchar(200), " +
+                    "socialskill05 varchar(200), " +
+                    "socialskill06 varchar(200), " +
+                    "socialskill07 varchar(200)," +
+                    "socialskill08 varchar(200)," +
+                    "socialskill09 varchar(200)," +
+                    "socialskill10 varchar(200));";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_socialskills);
+            System.out.println("table socialskills created");
+
+            //Adding constraints (PK and FK)
+            String query_pkfk_action = "ALTER TABLE characterbasics " +
+                    "ADD CONSTRAINT fk_action " +
+                    "FOREIGN KEY (id_a_skillset) " +
+                    "REFERENCES actionskills (id_a_skillset);";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_pkfk_action);
+
+            String query_pkfk_knowledge = "ALTER TABLE characterbasics " +
+                    "ADD CONSTRAINT fk_knowledge " +
+                    "FOREIGN KEY (id_k_skillset) " +
+                    "REFERENCES knowledgeskills (id_k_skillset);";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_pkfk_knowledge);
+
+            String query_pkfk_social = "ALTER TABLE characterbasics " +
+                    "ADD CONSTRAINT fk_social " +
+                    "FOREIGN KEY (id_s_skillset) " +
+                    "REFERENCES socialskills (id_s_skillset);";
+            statement=conn.createStatement();
+            statement.executeUpdate(query_pkfk_social);
+
         }catch (Exception e){
             System.out.println(e);
         }
@@ -109,7 +168,9 @@ public class DbFunctions {
     public void fill_Characters (Connection conn, String tbl_name, String name, String gender, int age, String stature, String religion, String job, String maritalStatus, int id_a_skillset, int id_k_skillset, int id_s_skillset){
         Statement statement;
         try{
-            String query = String.format("insert into %s(name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');",tbl_name,name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset);
+            String query = String.format("insert into %s(name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset) " +
+                                        "values('%s','%s','%d','%s','%s','%s','%s','%d','%d','%d');",
+                                        tbl_name,name,gender,age,stature,religion,job,maritalStatus,id_a_skillset,id_k_skillset,id_s_skillset);
             statement=conn.createStatement();
             statement.executeUpdate(query);
             System.out.println("Row inserted");
